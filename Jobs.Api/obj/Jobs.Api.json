@@ -1,17 +1,32 @@
 {
-  "openapi": "3.1.1",
+  "x-generator": "NSwag v14.6.3.0 (NJsonSchema v11.5.2.0 (Newtonsoft.Json v13.0.0.0))",
+  "openapi": "3.0.0",
   "info": {
-    "title": "Jobs.Api | v1",
-    "version": "1.0.0"
+    "title": "Jobs API",
+    "description": "Jobs API",
+    "version": "v1"
   },
   "paths": {
-    "/jobs/{JobId}/apply": {
+    "/jobs/{jobId}/apply": {
       "post": {
         "tags": [
-          "Jobs.Api"
+          "Jobs"
         ],
         "operationId": "ApplyToJobEndpoint",
+        "parameters": [
+          {
+            "name": "jobId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
         "requestBody": {
+          "x-name": "ApplyToJobRequest",
+          "description": "",
           "content": {
             "multipart/form-data": {
               "schema": {
@@ -19,7 +34,8 @@
               }
             }
           },
-          "required": true
+          "required": true,
+          "x-position": 1
         },
         "responses": {
           "204": {
@@ -31,16 +47,36 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": [
+              "Applicant"
+            ]
+          }
+        ]
       }
     },
-    "/applications/{Id}/close": {
+    "/applications/{id}/close": {
       "patch": {
         "tags": [
-          "Jobs.Api"
+          "Applications"
         ],
         "operationId": "CloseApplicationEndpoint",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
         "requestBody": {
+          "x-name": "CloseApplicationRequest",
+          "description": "",
           "content": {
             "application/json": {
               "schema": {
@@ -48,7 +84,8 @@
               }
             }
           },
-          "required": true
+          "required": true,
+          "x-position": 1
         },
         "responses": {
           "204": {
@@ -60,18 +97,25 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": [
+              "Admin"
+            ]
+          }
+        ]
       }
     },
     "/applications": {
       "get": {
         "tags": [
-          "Jobs.Api"
+          "Applications"
         ],
         "operationId": "ListApplicationsEndpoint",
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Success",
             "content": {
               "application/json": {
                 "schema": {
@@ -86,18 +130,25 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": [
+              "Admin"
+            ]
+          }
+        ]
       }
     },
     "/applications/mine": {
       "get": {
         "tags": [
-          "Jobs.Api"
+          "Applications"
         ],
         "operationId": "MyApplicationsEndpoint",
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Success",
             "content": {
               "application/json": {
                 "schema": {
@@ -112,16 +163,25 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": [
+              "Applicant"
+            ]
+          }
+        ]
       }
     },
     "/jobs": {
       "post": {
         "tags": [
-          "Jobs.Api"
+          "Jobs"
         ],
         "operationId": "CreateJobEndpoint",
         "requestBody": {
+          "x-name": "CreateJobRequest",
+          "description": "",
           "content": {
             "application/json": {
               "schema": {
@@ -129,15 +189,16 @@
               }
             }
           },
-          "required": true
+          "required": true,
+          "x-position": 1
         },
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Success",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Job"
+                  "$ref": "#/components/schemas/JobsApiEntitiesJob"
                 }
               }
             }
@@ -148,20 +209,27 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": [
+              "Admin"
+            ]
+          }
+        ]
       },
       "get": {
         "tags": [
-          "Jobs.Api"
+          "Jobs"
         ],
         "operationId": "JobsApiFeaturesJobsListJobs",
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Success",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ListJobsResponse"
+                  "$ref": "#/components/schemas/JobsApiFeaturesJobsListJobsResponse"
                 }
               }
             }
@@ -169,30 +237,31 @@
           "401": {
             "description": "Unauthorized"
           }
-        }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
       }
     },
-    "/jobs/{Id}": {
+    "/jobs/{id}": {
       "delete": {
         "tags": [
-          "Jobs.Api"
+          "Jobs"
         ],
         "operationId": "DeleteJobEndpoint",
-        "requestBody": {
-          "content": {
-            "*/*": {
-              "schema": {
-                "$ref": "#/components/schemas/DeleteJobRequest"
-              }
-            },
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/DeleteJobRequest"
-              }
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
             }
-          },
-          "required": true
-        },
+          }
+        ],
         "responses": {
           "204": {
             "description": "No Content"
@@ -203,35 +272,38 @@
           "403": {
             "description": "Forbidden"
           }
-        }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": [
+              "Admin"
+            ]
+          }
+        ]
       },
       "get": {
         "tags": [
-          "Jobs.Api"
+          "Jobs"
         ],
         "operationId": "GetJobEndpoint",
-        "requestBody": {
-          "content": {
-            "*/*": {
-              "schema": {
-                "$ref": "#/components/schemas/GetJobRequest"
-              }
-            },
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/GetJobRequest"
-              }
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
             }
-          },
-          "required": true
-        },
+          }
+        ],
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Success",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Job"
+                  "$ref": "#/components/schemas/JobsApiEntitiesJob"
                 }
               }
             }
@@ -242,26 +314,29 @@
     "/auth/login": {
       "post": {
         "tags": [
-          "Jobs.Api"
+          "Auth"
         ],
         "operationId": "JobsApiFeaturesAuthCommandsLoginEndpoint",
         "requestBody": {
+          "x-name": "LoginRequest",
+          "description": "",
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/LoginRequest"
+                "$ref": "#/components/schemas/JobsApiFeaturesAuthCommandsLoginRequest"
               }
             }
           },
-          "required": true
+          "required": true,
+          "x-position": 1
         },
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Success",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/LoginResponse"
+                  "$ref": "#/components/schemas/JobsApiFeaturesAuthCommandsLoginResponse"
                 }
               }
             }
@@ -272,26 +347,29 @@
     "/auth/admin/register": {
       "post": {
         "tags": [
-          "Jobs.Api"
+          "Auth"
         ],
         "operationId": "JobsApiFeaturesAuthCommandsRegisterAdmin",
         "requestBody": {
+          "x-name": "RegisterAdminRequest",
+          "description": "",
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/RegisterAdminRequest"
+                "$ref": "#/components/schemas/JobsApiFeaturesAuthCommandsRegisterAdminRequest"
               }
             }
           },
-          "required": true
+          "required": true,
+          "x-position": 1
         },
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Success",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/RegisterAdminResponse"
+                  "$ref": "#/components/schemas/JobsApiFeaturesAuthCommandsRegisterAdminResponse"
                 }
               }
             }
@@ -302,26 +380,29 @@
     "/auth/Applicant/register": {
       "post": {
         "tags": [
-          "Jobs.Api"
+          "Auth"
         ],
         "operationId": "JobsApiFeaturesAuthCommandsRegisterApplicant",
         "requestBody": {
+          "x-name": "RegisterApplicantRequest",
+          "description": "",
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/RegisterApplicantRequest"
+                "$ref": "#/components/schemas/JobsApiFeaturesAuthCommandsRegisterApplicantRequest"
               }
             }
           },
-          "required": true
+          "required": true,
+          "x-position": 1
         },
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Success",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/RegisterApplicantResponse"
+                  "$ref": "#/components/schemas/JobsApiFeaturesAuthCommandsRegisterApplicantResponse"
                 }
               }
             }
@@ -332,15 +413,58 @@
   },
   "components": {
     "schemas": {
-      "ApplicationDetail": {
+      "ApplyToJobRequest": {
         "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "desiredSalary": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "resume": {
+            "type": "string",
+            "format": "binary",
+            "nullable": true
+          },
+          "coverLetter": {
+            "type": "string",
+            "format": "binary",
+            "nullable": true
+          },
+          "otherDocument": {
+            "type": "string",
+            "format": "binary",
+            "nullable": true
+          }
+        }
+      },
+      "CloseApplicationRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "reason": {
+            "type": "string"
+          }
+        }
+      },
+      "ListApplicationsResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "applications": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ListApplicationsResponse_ApplicationDetail"
+            }
+          }
+        }
+      },
+      "ListApplicationsResponse_ApplicationDetail": {
+        "type": "object",
+        "additionalProperties": false,
         "properties": {
           "id": {
-            "pattern": "^-?(?:0|[1-9]\\d*)$",
-            "type": [
-              "integer",
-              "string"
-            ],
+            "type": "integer",
             "format": "int32"
           },
           "applicantName": {
@@ -353,189 +477,27 @@
             "type": "string"
           },
           "desiredSalary": {
-            "pattern": "^-?(?:0|[1-9]\\d*)$",
-            "type": [
-              "integer",
-              "string"
-            ],
+            "type": "integer",
             "format": "int32"
           },
           "closed": {
             "type": "boolean"
           },
           "closingReason": {
-            "type": [
-              "null",
-              "string"
-            ]
-          },
-          "documents": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/DocumentInfo"
-            }
-          }
-        }
-      },
-      "ApplicationSummary": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "pattern": "^-?(?:0|[1-9]\\d*)$",
-            "type": [
-              "integer",
-              "string"
-            ],
-            "format": "int32"
-          },
-          "jobTitle": {
-            "type": "string"
-          },
-          "company": {
-            "type": "string"
-          },
-          "desiredSalary": {
-            "pattern": "^-?(?:0|[1-9]\\d*)$",
-            "type": [
-              "integer",
-              "string"
-            ],
-            "format": "int32"
-          },
-          "closed": {
-            "type": "boolean"
-          },
-          "closingReason": {
-            "type": [
-              "null",
-              "string"
-            ]
-          },
-          "documents": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          }
-        }
-      },
-      "ApplyToJobRequest": {
-        "type": "object",
-        "properties": {
-          "jobId": {
-            "pattern": "^-?(?:0|[1-9]\\d*)$",
-            "type": [
-              "integer",
-              "string"
-            ],
-            "format": "int32"
-          },
-          "desiredSalary": {
-            "pattern": "^-?(?:0|[1-9]\\d*)$",
-            "type": [
-              "integer",
-              "string"
-            ],
-            "format": "int32"
-          },
-          "resume": {
-            "oneOf": [
-              {
-                "type": "null"
-              },
-              {
-                "$ref": "#/components/schemas/IFormFile"
-              }
-            ]
-          },
-          "coverLetter": {
-            "oneOf": [
-              {
-                "type": "null"
-              },
-              {
-                "$ref": "#/components/schemas/IFormFile"
-              }
-            ]
-          },
-          "otherDocument": {
-            "oneOf": [
-              {
-                "type": "null"
-              },
-              {
-                "$ref": "#/components/schemas/IFormFile"
-              }
-            ]
-          }
-        }
-      },
-      "CloseApplicationRequest": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "pattern": "^-?(?:0|[1-9]\\d*)$",
-            "type": [
-              "integer",
-              "string"
-            ],
-            "format": "int32"
-          },
-          "reason": {
-            "type": "string"
-          }
-        }
-      },
-      "CreateJobRequest": {
-        "type": "object",
-        "properties": {
-          "title": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          },
-          "location": {
-            "type": "string"
-          },
-          "startDate": {
             "type": "string",
-            "format": "date-time"
+            "nullable": true
           },
-          "companyName": {
-            "type": "string"
-          },
-          "recruiter": {
-            "type": "string"
-          },
-          "recruiterEmail": {
-            "type": "string"
-          },
-          "yearlySalary": {
-            "pattern": "^-?(?:0|[1-9]\\d*)$",
-            "type": [
-              "integer",
-              "string"
-            ],
-            "format": "int32"
+          "documents": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ListApplicationsResponse_DocumentInfo"
+            }
           }
         }
       },
-      "DeleteJobRequest": {
+      "ListApplicationsResponse_DocumentInfo": {
         "type": "object",
-        "properties": {
-          "id": {
-            "pattern": "^-?(?:0|[1-9]\\d*)$",
-            "type": [
-              "integer",
-              "string"
-            ],
-            "format": "int32"
-          }
-        }
-      },
-      "DocumentInfo": {
-        "type": "object",
+        "additionalProperties": false,
         "properties": {
           "name": {
             "type": "string"
@@ -548,43 +510,57 @@
           }
         }
       },
-      "GetJobRequest": {
+      "MyApplicationsResponse": {
         "type": "object",
+        "additionalProperties": false,
         "properties": {
-          "id": {
-            "pattern": "^-?(?:0|[1-9]\\d*)$",
-            "type": [
-              "integer",
-              "string"
-            ],
-            "format": "int32"
+          "applications": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MyApplicationsResponse_ApplicationSummary"
+            }
           }
         }
       },
-      "IFormFile": {
-        "type": [
-          "null",
-          "string"
-        ],
-        "format": "binary"
-      },
-      "Job": {
-        "required": [
-          "title",
-          "description",
-          "location",
-          "companyName",
-          "recruiter",
-          "recruiterEmail"
-        ],
+      "MyApplicationsResponse_ApplicationSummary": {
         "type": "object",
+        "additionalProperties": false,
         "properties": {
           "id": {
-            "pattern": "^-?(?:0|[1-9]\\d*)$",
-            "type": [
-              "integer",
-              "string"
-            ],
+            "type": "integer",
+            "format": "int32"
+          },
+          "jobTitle": {
+            "type": "string"
+          },
+          "company": {
+            "type": "string"
+          },
+          "desiredSalary": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "closed": {
+            "type": "boolean"
+          },
+          "closingReason": {
+            "type": "string",
+            "nullable": true
+          },
+          "documents": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "JobsApiEntitiesJob": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "integer",
             "format": "int32"
           },
           "title": {
@@ -610,29 +586,69 @@
             "type": "string"
           },
           "yearlySalary": {
-            "pattern": "^-?(?:0|[1-9]\\d*)$",
-            "type": [
-              "integer",
-              "string"
-            ],
+            "type": "integer",
             "format": "int32"
           }
         }
       },
-      "JobListItem": {
-        "required": [
-          "title",
-          "location",
-          "company"
-        ],
+      "CreateJobRequest": {
         "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "location": {
+            "type": "string"
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "companyName": {
+            "type": "string"
+          },
+          "recruiter": {
+            "type": "string"
+          },
+          "recruiterEmail": {
+            "type": "string"
+          },
+          "yearlySalary": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "DeleteJobRequest": {
+        "type": "object",
+        "additionalProperties": false
+      },
+      "GetJobRequest": {
+        "type": "object",
+        "additionalProperties": false
+      },
+      "JobsApiFeaturesJobsListJobsResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "jobs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/JobsApiFeaturesJobsListJobsResponse_JobListItem"
+            }
+          }
+        }
+      },
+      "JobsApiFeaturesJobsListJobsResponse_JobListItem": {
+        "type": "object",
+        "additionalProperties": false,
         "properties": {
           "id": {
-            "pattern": "^-?(?:0|[1-9]\\d*)$",
-            "type": [
-              "integer",
-              "string"
-            ],
+            "type": "integer",
             "format": "int32"
           },
           "title": {
@@ -646,64 +662,39 @@
           }
         }
       },
-      "ListApplicationsResponse": {
+      "JobsApiFeaturesAuthCommandsLoginResponse": {
         "type": "object",
-        "properties": {
-          "applications": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/ApplicationDetail"
-            }
-          }
-        }
-      },
-      "ListJobsResponse": {
-        "type": "object",
-        "properties": {
-          "jobs": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/JobListItem"
-            }
-          }
-        }
-      },
-      "LoginRequest": {
-        "type": "object",
-        "properties": {
-          "email": {
-            "type": "string"
-          },
-          "password": {
-            "type": "string"
-          }
-        }
-      },
-      "LoginResponse": {
-        "type": "object",
+        "additionalProperties": false,
         "properties": {
           "token": {
             "type": "string"
           }
         }
       },
-      "MyApplicationsResponse": {
+      "JobsApiFeaturesAuthCommandsLoginRequest": {
         "type": "object",
+        "additionalProperties": false,
         "properties": {
-          "applications": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/ApplicationSummary"
-            }
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
           }
         }
       },
-      "RegisterAdminRequest": {
-        "required": [
-          "firstName",
-          "lastName"
-        ],
+      "JobsApiFeaturesAuthCommandsRegisterAdminResponse": {
         "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "JobsApiFeaturesAuthCommandsRegisterAdminRequest": {
+        "type": "object",
+        "additionalProperties": false,
         "properties": {
           "email": {
             "type": "string"
@@ -723,20 +714,18 @@
           }
         }
       },
-      "RegisterAdminResponse": {
+      "JobsApiFeaturesAuthCommandsRegisterApplicantResponse": {
         "type": "object",
+        "additionalProperties": false,
         "properties": {
           "message": {
             "type": "string"
           }
         }
       },
-      "RegisterApplicantRequest": {
-        "required": [
-          "firstName",
-          "lastName"
-        ],
+      "JobsApiFeaturesAuthCommandsRegisterApplicantRequest": {
         "type": "object",
+        "additionalProperties": false,
         "properties": {
           "email": {
             "type": "string"
@@ -753,22 +742,17 @@
           "birthdate": {
             "type": "string",
             "format": "date-time"
-          }
-        }
-      },
-      "RegisterApplicantResponse": {
-        "type": "object",
-        "properties": {
-          "message": {
-            "type": "string"
           }
         }
       }
+    },
+    "securitySchemes": {
+      "JWTBearerAuth": {
+        "type": "http",
+        "description": "Enter a JWT token to authorize the requests...",
+        "scheme": "Bearer",
+        "bearerFormat": "JWT"
+      }
     }
-  },
-  "tags": [
-    {
-      "name": "Jobs.Api"
-    }
-  ]
+  }
 }

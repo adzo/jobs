@@ -1,5 +1,6 @@
 using FastEndpoints;
 using FastEndpoints.Security;
+using FastEndpoints.Swagger;
 using Jobs.Api.Data;
 using Jobs.Api.Entities;
 using Jobs.Api.Services;
@@ -31,7 +32,17 @@ builder.Services.AddAuthenticationJwtBearer(s =>
     s.SigningKey = builder.Configuration["Jwt:SigningKey"]!);
 
 builder.Services.AddAuthorization();
-builder.Services.AddFastEndpoints();
+builder.Services.AddFastEndpoints()
+    .SwaggerDocument(o =>
+    {
+        o.DocumentSettings = s =>
+        {
+            s.Title = "Jobs API";
+            s.Version = "v1";
+            s.Description = "Jobs API";
+        };
+    });
+
 builder.Services.AddScoped<IFileStorageService, FileStorageService>();
 
 
@@ -46,6 +57,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
-app.MapFastEndpoints();
+app.UseFastEndpoints()
+    .UseSwaggerGen();
 
 app.Run();

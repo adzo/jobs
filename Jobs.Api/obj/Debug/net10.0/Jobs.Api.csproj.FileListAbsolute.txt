@@ -179,3 +179,4 @@
 /Users/adzo/personal_projects/jobs/Jobs.Api/Jobs.Api/obj/Debug/net10.0/Jobs.Api.pdb
 /Users/adzo/personal_projects/jobs/Jobs.Api/Jobs.Api/obj/Debug/net10.0/Jobs.Api.genruntimeconfig.cache
 /Users/adzo/personal_projects/jobs/Jobs.Api/Jobs.Api/obj/Debug/net10.0/ref/Jobs.Api.dll
+/Users/adzo/personal_projects/jobs/Jobs.Api/Jobs.Api/obj/Debug/net10.0/Jobs.Api.sourcelink.json
